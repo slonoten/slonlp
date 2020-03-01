@@ -3,6 +3,7 @@
 import string
 import re
 from typing import List, Tuple, Iterable
+from functools import lru_cache
 
 import nltk
 from nltk.tokenize import RegexpTokenizer, PunktSentenceTokenizer
@@ -39,6 +40,7 @@ def tokenize_text(sent_tokenizer: PunktSentenceTokenizer,
         parargraph_start += len(para_text) + 1
 
 
+@lru_cache(maxsize=10)
 def get_sentence_tokenizer(lang: str = 'russian') -> PunktSentenceTokenizer:
     """Returns sentence detector
     
@@ -50,6 +52,7 @@ def get_sentence_tokenizer(lang: str = 'russian') -> PunktSentenceTokenizer:
     return nltk.data.load(f'tokenizers/punkt/{lang}.pickle')
 
 
+@lru_cache(maxsize=1)
 def get_word_tokenizer() -> RegexpTokenizer:
     """Returns word tokenizer
     
