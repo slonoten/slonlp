@@ -74,7 +74,12 @@ def build_iob(
                     annotation[entity_index] if len(annotation) > entity_index else None
                 )
                 entity_started = False
-            if entity and start >= entity.position.start and end <= entity.position.end:
+            if entity and (
+                start >= entity.position.start
+                and start < entity.position.end
+                or end > entity.position.start
+                and end <= entity.position.end
+            ):
                 if not entity_started and label == entity.label:
                     prefix = "B"
                 else:
